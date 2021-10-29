@@ -6,7 +6,7 @@ The file managers have native features to handle LUKS-encrypted volumes (disks, 
 
 This extension creates LUKS2 container files with ext4 or Btrfs filesystem inside, and mounts/unmounts LUKS container files. The mount/unmount should work regardless of the container's LUKS version or type of filesystem inside.  So you could create a LUKS container file manually if you wished, and still use the mount/unmount actions of this extension.
 
-You must have "sudo" permission to use this extension.
+You must know the "sudo" password to use this extension.
 
 This software works on Linux only.
 
@@ -27,8 +27,12 @@ btrfs --version		# if this fails, install "btrfs-progs"
 
 ## Install
 
+
+### For Thunar:
+
 ```
-# Copy the *.sh files to your disk, perhaps somewhere in your PATH, then:
+# Copy the *.sh files to disk, perhaps somewhere in your PATH, then:
+
 chmod +x lukscontainerfile-*.sh
 ```
 
@@ -45,7 +49,19 @@ just "lukscontainerfile-mount.sh %f".
 9. Click OK button.
 10. Do similar to add the "Unmount" and "Format" actions.
 
+### For Nautilus:
+
+```
+cp *.sh $HOME/.gnome2/nautilus-scripts
+# or to make available to all users:
+sudo cp *.sh /usr/share/nautilus-scripts
+
+chmod +x lukscontainerfile-*.sh
+```
+
 ## Un-install
+
+### For Thunar:
 
 1. In the Thunar file manager, do Edit / Configure custom actions.
 2. Highlight the "Mount" action.
@@ -56,18 +72,29 @@ just "lukscontainerfile-mount.sh %f".
 rm lukscontainerfile-*.sh
 ```
 
+### For Nautilus:
+
+```
+rm $HOME/.gnome2/nautilus-scripts/lukscontainerfile-*.sh
+# or:
+sudo rm /usr/share/nautilus-scripts/lukscontainerfile-*.sh
+
+```
+
 
 ## Use
 
-In file manager, right-click on a SOMENAME.luks file, and the context menu will include menu items "Format LUKS2 container file", "Mount LUKS container file", and "Unmount LUKS container file".
+In Thunar file manager, right-click on a SOMENAME.luks file, and the context menu will include menu items "Format LUKS2 container file", "Mount LUKS container file", and "Unmount LUKS container file".
 
-All operations require you to have "sudo" permission.
+In Nautilus file manager, right-click on a SOMENAME.luks file, click on Scripts, and the context menu will include menu items "Format LUKS2 container file", "Mount LUKS container file", and "Unmount LUKS container file".
+
+All operations require you to know the "sudo" password.
 
 To use the context menu items:
 
 * Create New / LUKS Container File ...
 
-    In Thunar file manager, select menu-item "File / Create Documet", set filename to SOMENAME.luks, and the file will be created with placeholder contents.  In CLI, you could do "touch SOMENAME.luks".  The filename must end with ".luks", and the basename should be alphanum (well, valid as a filesystem label, anyway).
+    In Thunar file manager, select menu-item "File / Create Document", set filename to SOMENAME.luks, and the file will be created with placeholder contents.  In Nautilus file manager, (do similar ???).  In CLI, you could do "touch SOMENAME.luks".  The filename must end with ".luks", and the basename should be alphanum (well, valid as a filesystem label, anyway).
 
 	File basename (without ".luks") will be used as label of filesystem, so for ext4 filesystem it must be 16 characters or less.  I don't know what the length limit is for Btrfs, and what types of chars can be in a label for any type of filesystem.
 
@@ -99,8 +126,12 @@ To use the context menu items:
 ### 1.0.0 (10/2021)
 * Tested only on Manjaro 21 Xfce with Thunar file manager.
 
+### 1.0.1 (10/2021)
+* Add directions for Nautilus file manager.
+
 
 ### To-Do / Quirks
+* Test on Nautilus.
 * Should object if container size is too small.
 
 
